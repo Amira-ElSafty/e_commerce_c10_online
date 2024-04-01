@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_e_commerce_c10_online/ui/auth/login/login_screen.dart';
 import 'package:flutter_e_commerce_c10_online/ui/auth/register/register_screen.dart';
 import 'package:flutter_e_commerce_c10_online/ui/home/cart/cart_screen.dart';
@@ -11,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main()async {
   runApp(MyApp());
+
 }
 class MyApp extends StatelessWidget {
   @override
