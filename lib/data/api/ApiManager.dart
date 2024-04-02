@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter_e_commerce_c10_online/data/model/response/CategoryOrBrandResponseDto.dart';
+import 'package:flutter_e_commerce_c10_online/data/model/response/ProductResponseDto.dart';
 import 'package:http/http.dart' as http;
 import '../../domain/entities/failurs.dart';
 import '../model/request/LoginRequest.dart';
@@ -69,6 +71,69 @@ class ApiManager {
         return Right(loginResponse);
       }else{
         return Left(ServerError(errorMessage: loginResponse.message
+        ));
+      }
+    }else{
+      // no internet connection
+      return Left(NetworkError(errorMessage: 'Please check Internet Connection'));
+    }
+  }
+
+  Future<Either<Failures, CategoryOrBrandResponseDto>> getCategories() async {
+    var connectivityResult = await Connectivity().checkConnectivity(); // User defined class
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      Uri url = Uri.https(ApiConstants.baseUrl, ApiEndPoints.getAllCategoriesApi);
+      var response = await http.get(url);
+      var categoriesResponse = CategoryOrBrandResponseDto.fromJson(
+          jsonDecode(response.body));
+      if(response.statusCode >= 200 && response.statusCode < 300){
+        // success
+        return Right(categoriesResponse);
+      }else{
+        return Left(ServerError(errorMessage: categoriesResponse.message
+        ));
+      }
+    }else{
+      // no internet connection
+      return Left(NetworkError(errorMessage: 'Please check Internet Connection'));
+    }
+  }
+
+  Future<Either<Failures, CategoryOrBrandResponseDto>> getBrands() async {
+    var connectivityResult = await Connectivity().checkConnectivity(); // User defined class
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      Uri url = Uri.https(ApiConstants.baseUrl, ApiEndPoints.getAllBrandsApi);
+      var response = await http.get(url);
+      var brandResponse = CategoryOrBrandResponseDto.fromJson(
+          jsonDecode(response.body));
+      if(response.statusCode >= 200 && response.statusCode < 300){
+        // success
+        return Right(brandResponse);
+      }else{
+        return Left(ServerError(errorMessage: brandResponse.message
+        ));
+      }
+    }else{
+      // no internet connection
+      return Left(NetworkError(errorMessage: 'Please check Internet Connection'));
+    }
+  }
+
+  Future<Either<Failures, ProductResponseDto>> getProducts() async {
+    var connectivityResult = await Connectivity().checkConnectivity(); // User defined class
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      Uri url = Uri.https(ApiConstants.baseUrl, ApiEndPoints.getAllProductsApi);
+      var response = await http.get(url);
+      var productResponse = ProductResponseDto.fromJson(
+          jsonDecode(response.body));
+      if(response.statusCode >= 200 && response.statusCode < 300){
+        // success
+        return Right(productResponse);
+      }else{
+        return Left(ServerError(errorMessage: productResponse.message
         ));
       }
     }else{

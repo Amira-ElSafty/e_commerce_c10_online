@@ -20,9 +20,9 @@ class RegisterResponseDto {
     error = json['errors'] != null ? Error.fromJson(json['errors']) : null;
     token = json['token'];
   }
-  String? message;
   UserDto? user;
   String? token;
+  String? message;
   String? statusMsg ;
   Error? error ;
 
