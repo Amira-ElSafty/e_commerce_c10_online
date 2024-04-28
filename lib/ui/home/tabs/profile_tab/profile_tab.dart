@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_e_commerce_c10_online/ui/auth/login/login_screen.dart';
 import 'package:flutter_e_commerce_c10_online/ui/utils/custome_text_field_item.dart';
 import 'package:flutter_e_commerce_c10_online/ui/utils/my_assets.dart';
 import 'package:flutter_e_commerce_c10_online/ui/utils/my_colors.dart';
+import 'package:flutter_e_commerce_c10_online/ui/utils/shared_preference.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfileTab extends StatelessWidget {
@@ -38,6 +40,9 @@ class ProfileTab extends StatelessWidget {
                         IconButton(
                             onPressed: () {
                               //todo: back to login
+                              SharedPreference.removeData(key: 'Token');
+                              Navigator.of(context).pushNamedAndRemoveUntil
+                                (LoginScreen.routeName, (route) => false);
                             },
                             icon: Icon(Icons.logout,
                             color: AppColors.primaryColor,))

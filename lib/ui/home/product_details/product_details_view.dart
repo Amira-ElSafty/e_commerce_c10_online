@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_e_commerce_c10_online/domain/entities/ProductResponseEntity.dart';
 import 'package:flutter_e_commerce_c10_online/ui/utils/my_assets.dart';
 import 'package:flutter_e_commerce_c10_online/ui/utils/my_colors.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
@@ -10,6 +11,7 @@ class ProductDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var args = ModalRoute.of(context)!.settings.arguments as ProductEntity;
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
@@ -55,14 +57,14 @@ class ProductDetailsView extends StatelessWidget {
                       indicatorBottomPadding: 20.h,
                       autoPlayInterval: 3000,
                       isLoop: true,
-                      children: [
-                        Image.asset(
-                          MyAssets.announcement1,
-                          fit: BoxFit.cover,
-                          height: 300.h,
-                          width: double.infinity,
-                        )
-                      ]),
+                      children: args.images!.map((url) => Image.network(
+                        url,
+                        fit: BoxFit.cover,
+                        height: 300.h,
+                        width: double.infinity,
+                      )
+                      ).toList()
+                  ),
                 ),
               ),
               SizedBox(
@@ -73,7 +75,7 @@ class ProductDetailsView extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      'title',
+                      args.title??"",
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                             fontSize: 18.sp,
                             color: AppColors.darkPrimaryColor,
@@ -82,7 +84,7 @@ class ProductDetailsView extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "EGP price",
+                    "EGP ${args.price}",
                     style: TextStyle(
                       fontSize: 18.sp,
                       color: AppColors.darkPrimaryColor,
@@ -110,7 +112,7 @@ class ProductDetailsView extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          "Sold : ",
+                          "Sold : ${args.sold} ",
                           style:
                               Theme.of(context).textTheme.titleSmall!.copyWith(
                                     color: AppColors.darkPrimaryColor,
@@ -127,7 +129,7 @@ class ProductDetailsView extends StatelessWidget {
                         width: 4.w,
                       ),
                       Text(
-                        "ratingsAverage",
+                        args.ratingsAverage.toString(),
                         style: Theme.of(context).textTheme.titleSmall!.copyWith(
                               color: AppColors.darkPrimaryColor,
                               fontSize: 18.sp,
@@ -191,7 +193,7 @@ class ProductDetailsView extends StatelessWidget {
                 height: 10.h,
               ),
               ReadMoreText(
-                'Description',
+                args.description??"",
                 trimLines: 3,
                 trimMode: TrimMode.Line,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
@@ -233,7 +235,7 @@ class ProductDetailsView extends StatelessWidget {
                         height: 5.h,
                       ),
                       Text(
-                        "EGP price",
+                        "EGP ${args.price}",
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium!

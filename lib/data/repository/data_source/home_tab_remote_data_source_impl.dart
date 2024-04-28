@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_e_commerce_c10_online/data/api/ApiManager.dart';
+import 'package:flutter_e_commerce_c10_online/domain/entities/AddCartResponseEntity.dart';
 import 'package:flutter_e_commerce_c10_online/domain/entities/CategoryOrBrandResponseEntity.dart';
 import 'package:flutter_e_commerce_c10_online/domain/entities/ProductResponseEntity.dart';
 import 'package:flutter_e_commerce_c10_online/domain/entities/failurs.dart';
@@ -39,5 +40,16 @@ class HomeTabRemoteDataSourceImpl implements HomeTabRemoteDataSource {
             (response) {
       return Right(response);
             });
+  }
+
+  @override
+  Future<Either<Failures, AddCartResponseEntity>> addToCart(String productId)async {
+    var either = await apiManager.addToCart(productId);
+    return either.fold((l) {
+      return Left(l);
+    },
+            (response) {
+          return Right(response);
+        });
   }
 }
